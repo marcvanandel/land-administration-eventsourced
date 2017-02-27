@@ -11,8 +11,17 @@
 
     <artifactId>land-administration-eventsourced-core</artifactId>
 
+    <properties>
+        <axon.version>3.0.2</axon.version>
+    </properties>
+
     <dependencies>
-        <!-- project dependencies -->
+        <!-- axon -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring</artifactId>
+            <version>${axon.version}</version>
+        </dependency>
 
         <!-- test dependencies -->
         <dependency>
