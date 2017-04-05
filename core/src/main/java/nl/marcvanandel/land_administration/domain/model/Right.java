@@ -1,5 +1,6 @@
 package nl.marcvanandel.land_administration.domain.model;
 
+import nl.marcvanandel.land_administration.domain.datatype.RightId;
 import nl.marcvanandel.land_administration.domain.datatype.RightType;
 import nl.marcvanandel.land_administration.domain.datatype.Share;
 
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 public class Right {
 
+    private RightId rightId;
     private RightType type;
     private Share share;
     private Set<Subject> subjects;

@@ -1,6 +1,7 @@
 package nl.marcvanandel.land_administration.domain.model;
 
 import nl.marcvanandel.land_administration.command.Alienation;
+import nl.marcvanandel.land_administration.domain.datatype.ParcelId;
 import nl.marcvanandel.land_administration.domain.event.RightTransferedEvent;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.commandhandling.model.AggregateRoot;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class Parcel {
 
     @AggregateIdentifier
-    private Long identifier;
+    private ParcelId identifier;
     private String location;
     private Set<Right> rights;
 
