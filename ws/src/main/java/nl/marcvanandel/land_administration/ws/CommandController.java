@@ -4,7 +4,8 @@ import nl.marcvanandel.land_administration.api.CommandRequest;
 import nl.marcvanandel.land_administration.api.CommandResponse;
 import nl.marcvanandel.land_administration.command.DomainException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,23 +22,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api")
 public class CommandController {
 
-    @Autowired
-    private CommandGateway commandGateway;
+    private final CommandGateway commandGateway;
+
+    private final Logger logger = LoggerFactory.getLogger(CommandController.class);
+
+    public CommandController(CommandGateway commandGateway) {
+        this.commandGateway = commandGateway;
+    }
 
     @RequestMapping(value = "verwerken",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_XML_VALUE,
         consumes = MediaType.APPLICATION_XML_VALUE)
-    public CommandResponse verwerken(@RequestBody CommandRequest registratieOpdracht) {
+    public CommandResponse verwerken(@RequestBody CommandRequest request) {
         try {
-            final CommandResponse registratieAntwoord = commandGateway.sendAndWait(registratieOpdracht);
-            return registratieAntwoord;
+            logger.debug("request : {}", request);
+            final CommandResponse response = commandGateway.sendAndWait(request);
+            logger.debug("response: {}", response);
+            return response;
         } catch (DomainException e) {
-            final CommandResponse registratieAntwoord =
-                new CommandResponse(CommandResponse.ResponseCode.ERROR, e.getMessage());
-            return registratieAntwoord;
+            final CommandResponse response = new CommandResponse(CommandResponse.ResponseCode.ERROR, e.getMessage());
+            logger.warn("response: {}", response);
+            return response;
         } catch (RuntimeException exception) {
-//            logger.logException(registratieOpdracht, exception);
+            logger.error("error: " + request, exception);
             throw exception;
         }
     }
