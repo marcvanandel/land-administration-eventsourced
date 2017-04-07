@@ -13,10 +13,14 @@
         <scala.version>2.11.2</scala.version>
         <scalatest.version>2.2.6</scalatest.version>
         <scala.plugin.version>2.15.2</scala.plugin.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <modules>
+        <module>api</module>
         <module>core</module>
+        <module>ws</module>
     </modules>
 
     <dependencies>
