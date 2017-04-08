@@ -414,7 +414,6 @@
         </codeStyleSettings>
         <codeStyleSettings language="Scala">
           <option name="CALL_PARAMETERS_WRAP" value="5" />
-          <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
           <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
           <option name="WRAP_LONG_LINES" value="true" />
         </codeStyleSettings>

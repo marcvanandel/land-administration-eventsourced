@@ -6,6 +6,7 @@ import nl.marcvanandel.land_administration.command.DomainException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class CommandController {
         this.commandGateway = commandGateway;
     }
 
-    @RequestMapping(value = "verwerken",
+    @RequestMapping(value = "process",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_XML_VALUE,
         consumes = MediaType.APPLICATION_XML_VALUE)

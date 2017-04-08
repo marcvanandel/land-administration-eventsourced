@@ -1,6 +1,5 @@
 package nl.marcvanandel.land_administration.domain.model
 
-import nl.marcvanandel.land_administration.command.Alienation
 import org.scalatest.{FeatureSpec, GivenWhenThen, ShouldMatchers}
 
 /**
@@ -23,7 +22,7 @@ class AlienationTest extends FeatureSpec
 
       When("an alienation command is received")
 
-      val alienation = new Alienation()
+//      val alienation = new Alienation()
       // TODO commandGateway.post(alienation)
 
       Then("assert expected event(s)")

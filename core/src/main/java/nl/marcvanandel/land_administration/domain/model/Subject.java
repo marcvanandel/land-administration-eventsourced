@@ -12,4 +12,11 @@ public class Subject {
 
     private SubjectId subjectId;
 
+    public SubjectId getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(SubjectId subjectId) {
+        this.subjectId = subjectId;
+    }
 }
