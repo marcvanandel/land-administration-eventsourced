@@ -22,13 +22,12 @@ public class ParcelCommandHandler {
     }
     
     @CommandHandler
-    public void createNewParcel() {
-//        Parcel.;
-//        repository.newInstance(() -> new Parcel(command.getBankAccountId(), command.getOverdraftLimit()));
+    public void createNewParcel(/* TODO : CreateParcelCommand command*/) {
+//        TODO : repository.newInstance(() -> new Parcel(command.getParcelId(), command));
     }
     
     @CommandHandler
     public void allianate() {
-        //
+        // TODO
     }
 }

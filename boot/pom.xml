@@ -15,9 +15,18 @@
     <dependencies>
         <!-- Project -->
         <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring</artifactId>
+        </dependency>
+        <dependency>
                 <groupId>nl.marcvanandel.landadministration</groupId>
                 <artifactId>land-administration-eventsourced-core</artifactId>
                 <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>nl.marcvanandel.landadministration</groupId>
+            <artifactId>land-administration-eventsourced-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>nl.marcvanandel.landadministration</groupId>

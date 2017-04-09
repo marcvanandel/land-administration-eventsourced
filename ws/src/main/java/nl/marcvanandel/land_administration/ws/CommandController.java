@@ -27,6 +27,7 @@ public class CommandController {
 
     private final Logger logger = LoggerFactory.getLogger(CommandController.class);
 
+    @Autowired
     public CommandController(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
     }

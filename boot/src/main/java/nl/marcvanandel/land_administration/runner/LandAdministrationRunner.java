@@ -4,7 +4,7 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"nl.marcvanandel.land_administration"})
 public class LandAdministrationRunner {
 
     public static void main(final String[] args) {

@@ -10,6 +10,8 @@
     <properties>
         <spring.boot.version>1.4.1.RELEASE</spring.boot.version>
 
+        <axon.version>3.0.2</axon.version>
+        
         <scala.version>2.11.2</scala.version>
         <scalatest.version>2.2.6</scalatest.version>
         <scala.plugin.version>2.15.2</scala.plugin.version>
@@ -49,7 +51,13 @@
 
     <dependencyManagement>
         <dependencies>
-
+            <!-- Axon -->
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-spring</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            
             <!-- 3rd party dependencies -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>

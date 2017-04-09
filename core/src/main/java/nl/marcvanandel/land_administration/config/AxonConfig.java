@@ -20,11 +20,13 @@ import nl.marcvanandel.land_administration.command.ParcelCommandHandler;
 import nl.marcvanandel.land_administration.domain.model.Parcel;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.spring.config.AxonConfiguration;
+import org.axonframework.spring.config.EnableAxon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableAxon
 public class AxonConfig {
 
     @Autowired
@@ -33,7 +35,7 @@ public class AxonConfig {
     private EventBus eventBus;
 
     @Bean
-    public ParcelCommandHandler bankAccountCommandHandler() {
+    public ParcelCommandHandler parcelCommandHandler() {
         return new ParcelCommandHandler(axonConfiguration.repository(Parcel.class), eventBus);
     }
     
