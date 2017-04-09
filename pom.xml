@@ -10,6 +10,8 @@
     <properties>
         <spring.boot.version>1.4.1.RELEASE</spring.boot.version>
 
+        <axon.version>3.0.2</axon.version>
+        
         <scala.version>2.11.2</scala.version>
         <scalatest.version>2.2.6</scalatest.version>
         <scala.plugin.version>2.15.2</scala.plugin.version>
@@ -20,6 +22,8 @@
     <modules>
         <module>api</module>
         <module>core</module>
+        <!--<module>view-ownership</module>-->
+        <module>boot</module>
         <module>ws</module>
     </modules>
 
@@ -28,6 +32,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -46,7 +51,13 @@
 
     <dependencyManagement>
         <dependencies>
-
+            <!-- Axon -->
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-spring</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            
             <!-- 3rd party dependencies -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -56,15 +67,20 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>1.4.1.RELEASE</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.4</version>
             </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
+            <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-validator</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>

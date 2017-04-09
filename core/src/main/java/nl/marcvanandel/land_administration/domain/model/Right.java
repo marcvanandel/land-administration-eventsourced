@@ -24,4 +24,35 @@ public class Right {
     private Share share;
     private Set<Subject> subjects;
 
+    public RightId getRightId() {
+        return rightId;
+    }
+
+    public void setRightId(RightId rightId) {
+        this.rightId = rightId;
+    }
+
+    public RightType getType() {
+        return type;
+    }
+
+    public void setType(RightType type) {
+        this.type = type;
+    }
+
+    public Share getShare() {
+        return share;
+    }
+
+    public void setShare(Share share) {
+        this.share = share;
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+    }
 }
