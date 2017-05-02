@@ -11,3 +11,21 @@ A view for getting the current owner of a parcel. This can be implemented lazy l
 ### module: view-ownership-history
 
 A view for obtaining the ownership with all its history. This can not be implemented lazy load, i.e., when requesting the ownsership of a given subject, all associated parcels are unknown.
+
+# Kadaster Open Source & Event Sourced
+
+- Engels
+- Event Sourced
+- LADM van Chrit Lemmen
+- DSLs?
+- Technology stack:
+  - JVM?
+    - Java
+    - Scala
+    - Clojure
+  - Kafka?
+- Hoe krijgen we dit als business pitch voor elkaar?
+  - Kadaster International: Kees de Zeeuw
+  - Frank Thierolff?
+  - MBP: partner (niet alleen geo!), platform (niet alleen geo!)
+  
