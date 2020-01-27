@@ -2,7 +2,6 @@ package nl.marcvanandel.land_administration.ws;
 
 import nl.marcvanandel.land_administration.api.CommandRequest;
 import nl.marcvanandel.land_administration.api.CommandResponse;
-import nl.marcvanandel.land_administration.command.DomainException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
