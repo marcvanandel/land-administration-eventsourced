@@ -12,12 +12,12 @@ class CreateSubjectCommand(
 )
 
 class CreateOwnershipCommand(
-        @TargetAggregateIdentifier val objectId: ObjectId,
+        @RoutingKey @TargetAggregateIdentifier val objectId: ObjectId,
         val owners: Set<Share>
 )
 
 data class TransferOwnerShipCommand(
-        @TargetAggregateIdentifier val objectId: ObjectId,
+        @RoutingKey @TargetAggregateIdentifier val objectId: ObjectId,
         val sellingShare: Share,
         val buyingSubjects: Set<Share>
 )

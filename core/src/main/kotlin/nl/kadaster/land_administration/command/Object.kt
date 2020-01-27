@@ -20,8 +20,7 @@ class Object {
 
     @CommandHandler
     constructor(command: CreateObjectCommand) {
-        println("receieved command [$command]")
-        val aggragateId = ObjectIdGenerator.next()
+        val aggragateId = command.objectId
         AggregateLifecycle.apply(ObjectCreatedEvent(aggragateId))
     }
 
@@ -29,7 +28,7 @@ class Object {
     fun handle(command: CreateOwnershipCommand) {
         validateOwnershipIsNotSetYet()
         validateFractionTotalOf1(command)
-        AggregateLifecycle.apply(OwnershipCreatedEvent(aggregateId, RightIdGenerator.next(), command.owners))
+        AggregateLifecycle.apply(OwnershipCreatedEvent(aggregateId, RightId(aggregateId.localId), command.owners))
     }
 
     private fun validateFractionTotalOf1(command: CreateOwnershipCommand) {
@@ -78,10 +77,10 @@ class Object {
 
 }
 
-data class Ownership(val rightId: RightId, val shares: MutableSet<Share> = Collections.emptySet())
+data class Ownership(val rightId: RightId, val shares: MutableSet<Share> = mutableSetOf())
 
 object ObjectIdGenerator {
-    private var lastId: Long = -1L
+    private var lastId: Long = 0L
 
     fun next(): ObjectId {
         return ObjectId(lastId++)
@@ -90,7 +89,7 @@ object ObjectIdGenerator {
 }
 
 object RightIdGenerator {
-    private var lastId: Long = -1L
+    private var lastId: Long = 0L
 
     fun next(): RightId {
         return RightId(lastId++)

@@ -4,6 +4,7 @@ import nl.kadaster.land_administration.coreapi.*
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.queryhandling.QueryHandler
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.persistence.ElementCollection
@@ -34,7 +35,10 @@ data class ObjectRightsView(
 
 }
 
-interface ObjectRightsViewRepository : JpaRepository<ObjectRightsView, Long>
+interface ObjectRightsViewRepository : JpaRepository<ObjectRightsView, Long> {
+    @Query("select max(i.objectId) from ObjectRightsView as i")
+    fun maxObjectId(): Long?
+}
 
 @Component
 class ObjectRightsProjector(private val repository: ObjectRightsViewRepository) {
@@ -53,9 +57,22 @@ class ObjectRightsProjector(private val repository: ObjectRightsViewRepository) 
         }
     }
 
+    @EventHandler
+    fun on(event: OwnershipTransferredEvent) {
+        repository.findById(event.objectId.localId).ifPresent { view ->
+            view.updateOwnershipId(event.rightId)
+            view.updateOwnershipShares(event.buyingSubjects)
+        }
+    }
+
     @QueryHandler
     fun handle(query: ObjectRightsQuery): ObjectRightsView {
         return repository.findById(query.objectId).orElse(null)
+    }
+
+    @QueryHandler
+    fun handle(query: MaxObjectId): Long {
+        return repository.maxObjectId() ?: 0
     }
 
 }

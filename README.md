@@ -4,6 +4,23 @@ This repo is an example on how a Land Administration system could be set up in a
 
 For the domain please have a look at the ISO standard of [Land Administration Domain Model](http://www.gdmc.nl/publications/2011/Land_Administration_Domain_Model.pdf) (LADM)
 
+## Running
+
+1. Start AxonServer:
+    ```
+   docker run -d --name my-axon-server -p 8024:8024 -p 8124:8124 --hostname axonserver -e AXONSERVER_HOSTNAME=axonserver axoniq/axonserver
+    ```
+1. Start Core: `:core/nl.kadaster.land_administration.LandAdministration.kt.main()`
+
+Removing previous runs of AxonServer:
+```
+docker stop my-axon-server && docker rm my-axon-server
+```
+
+## Structure
+
+> UNDER CONSTRUCTION
+
 ### module: view-ownership
 
 A view for getting the current owner of a parcel. This can be implemented lazy load, i.e.,  when requesting a given parcel all events for that parcel are replayed.
@@ -16,7 +33,7 @@ A view for obtaining the ownership with all its history. This can not be impleme
 
 - Engels
 - Event Sourced
-- LADM van Chrit Lemmen
+- LADM (ISO 19152)
 - DSLs?
 - Technology stack:
   - JVM?
@@ -25,7 +42,7 @@ A view for obtaining the ownership with all its history. This can not be impleme
     - Clojure
   - Kafka?
 - Hoe krijgen we dit als business pitch voor elkaar?
-  - Kadaster International: Kees de Zeeuw
-  - Frank Thierolff?
+  - Kadaster International
+  - Bestuur
   - MBP: partner (niet alleen geo!), platform (niet alleen geo!)
   

@@ -65,27 +65,3 @@ operator fun ClosedRange<Fraction>.iterator() =
 
         }
 
-fun main(args: Array<String>) {
-    println(Fraction(2, 3))
-
-    var sum = Fraction(2, 3) + Fraction(3, 2)
-    println("Sum of $sum: ${sum.decimal}")
-    //invoke
-    sum("My invoke prefix: ")
-    println("3/2 > 2/2: ${Fraction(3, 2) > Fraction(2, 2)}")
-    println("1/2 <= 2/4: ${Fraction(1, 2) <= Fraction(2, 4)}")
-    println("Sum after inc: ${++sum}")
-    println("Sum after dec: ${--sum}")
-    println("Sum negated: ${-sum}")
-    println("Sum numerator: ${sum[0]}")
-
-    val fracRange = Fraction(1, 5)..Fraction(5, 7)
-    println(Fraction(3, 5) in fracRange)
-    for (i in fracRange) {
-        println("Next: $i")
-    }
-
-    val f = Fraction(2, 3)
-    val (a, b) = f
-    println("Destructed sum to: ($a, $b)")
-}
