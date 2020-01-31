@@ -1,6 +1,6 @@
 package nl.kadaster.land_administration.domain.repository
 
-//import nl.kadaster.land_administration.coreapi.ObjectIdentifier
+//import nl.kadaster.land_administration.core.commons.ObjectIdentifier
 //import nl.kadaster.land_administration.domain.state.model.Parcel
 //import org.axonframework.commandhandling.model.Aggregate
 //import org.axonframework.commandhandling.model.Repository

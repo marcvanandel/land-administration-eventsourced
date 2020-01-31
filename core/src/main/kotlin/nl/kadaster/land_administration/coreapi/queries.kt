@@ -1,7 +1,5 @@
 package nl.kadaster.land_administration.coreapi
 
-data class ObjectRightsQuery(val objectId: Long)
+import nl.kadaster.land_administration.core.commons.ObjectId
 
-class MaxObjectId()
-
-class MaxSubjectId()
+data class ObjectRightsQuery(val objectId: ObjectId)

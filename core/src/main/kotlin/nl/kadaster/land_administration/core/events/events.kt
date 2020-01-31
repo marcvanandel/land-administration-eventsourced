@@ -1,4 +1,9 @@
-package nl.kadaster.land_administration.coreapi
+package nl.kadaster.land_administration.core.events
+
+import nl.kadaster.land_administration.core.commons.ObjectId
+import nl.kadaster.land_administration.core.commons.RightId
+import nl.kadaster.land_administration.core.commons.Share
+import nl.kadaster.land_administration.core.commons.SubjectId
 
 data class ObjectCreatedEvent(
         val objectId: ObjectId

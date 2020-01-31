@@ -1,4 +1,4 @@
-package nl.kadaster.land_administration.config
+package nl.kadaster.land_administration
 
 
 //@Configuration

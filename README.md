@@ -8,13 +8,15 @@ For the domain please have a look at the ISO standard of [Land Administration Do
 
 1. Start AxonServer:
     ```
-   docker run -d --name my-axon-server -p 8024:8024 -p 8124:8124 --hostname axonserver -e AXONSERVER_HOSTNAME=axonserver axoniq/axonserver
+   docker run --rm -d --name my-axon-server -p 8024:8024 -p 8124:8124 --hostname axonserver -e AXONSERVER_HOSTNAME=axonserver axoniq/axonserver
     ```
-1. Start Core: `:core/nl.kadaster.land_administration.LandAdministration.kt.main()`
+1. Start Core: `:core/nl.kadaster.land_administration.LandAdministration.main()`
 
-Removing previous runs of AxonServer:
+## Shutdown
+
+1. Stop AxonServer:
 ```
-docker stop my-axon-server && docker rm my-axon-server
+docker stop my-axon-server
 ```
 
 ## Structure

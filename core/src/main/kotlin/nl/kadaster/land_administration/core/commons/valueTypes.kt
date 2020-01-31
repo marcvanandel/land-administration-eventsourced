@@ -1,27 +1,41 @@
-package nl.kadaster.land_administration.coreapi
+package nl.kadaster.land_administration.core.commons
 
 enum class RightType {
     OWNERSHIP
 }
 
-//data class ObjectIdentifier(val namespace: String, val localId: String)
-open class ObjectIdentifier(val namespace: String, open val localId: Long) {
-    fun asString(): String {
-        return "${namespace}.${localId.toString()}"
+open class ObjectIdentifier(val namespace: String, open val localId: String) {
+    final override fun toString(): String {
+        return "$namespace.$localId"
+    }
+
+    fun asString(): String = toString()
+}
+
+data class ObjectId(override val localId: String) : ObjectIdentifier(namespace, localId) {
+    companion object {
+        const val namespace: String = "OBJECT"
     }
 }
 
-data class ObjectId(override val localId: Long) : ObjectIdentifier("OBJECT", localId)
-data class RightId(override val localId: Long) : ObjectIdentifier("RIGHT", localId)
-data class SubjectId(override val localId: Long) : ObjectIdentifier("SUBJECT", localId)
+data class RightId(override val localId: String) : ObjectIdentifier(namespace, localId) {
+    companion object {
+        const val namespace: String = "RIGHT"
+    }
+}
+data class SubjectId(override val localId: String) : ObjectIdentifier(namespace, localId) {
+    companion object {
+        const val namespace: String = "SUBJECT"
+    }
+}
 
 data class Share(val subjectId: SubjectId, val fraction: Fraction)
 
 data class Fraction(val numerator: Int, val denominator: Int) : Comparable<Fraction> {
 
-    val decimal by lazy { numerator.toDouble() / denominator }
+    fun decimal(): Double = numerator.toDouble() / denominator
 
-    override fun compareTo(other: Fraction) = decimal.compareTo(other.decimal)
+    override fun compareTo(other: Fraction) = decimal().compareTo(other.decimal())
 
     override fun toString() = "$numerator/$denominator"
 

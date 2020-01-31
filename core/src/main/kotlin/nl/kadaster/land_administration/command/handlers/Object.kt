@@ -1,12 +1,21 @@
-package nl.kadaster.land_administration.command
+package nl.kadaster.land_administration.command.handlers
 
-import nl.kadaster.land_administration.coreapi.*
+import nl.kadaster.land_administration.command.api.CommandException
+import nl.kadaster.land_administration.command.api.SharesTotalNotValid
+import nl.kadaster.land_administration.command.api.CreateObjectCommand
+import nl.kadaster.land_administration.command.api.CreateOwnershipCommand
+import nl.kadaster.land_administration.command.api.TransferOwnerShipCommand
+import nl.kadaster.land_administration.core.commons.ObjectId
+import nl.kadaster.land_administration.core.commons.RightId
+import nl.kadaster.land_administration.core.commons.Share
+import nl.kadaster.land_administration.core.events.ObjectCreatedEvent
+import nl.kadaster.land_administration.core.events.OwnershipCreatedEvent
+import nl.kadaster.land_administration.core.events.OwnershipTransferredEvent
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.spring.stereotype.Aggregate
-import java.util.*
 
 @Aggregate
 class Object {
@@ -41,13 +50,13 @@ class Object {
 
     private fun validateOwnershipIsNotSetYet() {
         if (ownership != null)
-            throw DomainException("Object [$aggregateId] already has an ownership right ([${ownership!!.rightId}])")
+            throw CommandException("Object [$aggregateId] already has an ownership right ([${ownership!!.rightId}])")
     }
 
     @CommandHandler
-    fun handle(command: TransferOwnerShipCommand) {
+    fun handle(command: TransferOwnerShipCommand): String {
         if (ownership == null || !ownership!!.shares.contains(command.sellingShare))
-            throw DomainException("Could not transfer ownership 'cause this share [${command.sellingShare}] has no share in current ownership!")
+            throw CommandException("Could not transfer ownership 'cause this share [${command.sellingShare}] has no share in current ownership!")
         else {
             AggregateLifecycle.apply(
                     OwnershipTransferredEvent(
@@ -56,6 +65,7 @@ class Object {
                             command.sellingShare,
                             command.buyingSubjects))
         }
+        return "Ownership transferred!"
     }
 
     @EventSourcingHandler
@@ -78,21 +88,3 @@ class Object {
 }
 
 data class Ownership(val rightId: RightId, val shares: MutableSet<Share> = mutableSetOf())
-
-object ObjectIdGenerator {
-    private var lastId: Long = 0L
-
-    fun next(): ObjectId {
-        return ObjectId(lastId++)
-    }
-
-}
-
-object RightIdGenerator {
-    private var lastId: Long = 0L
-
-    fun next(): RightId {
-        return RightId(lastId++)
-    }
-
-}

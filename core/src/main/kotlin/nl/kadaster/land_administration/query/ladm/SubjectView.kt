@@ -1,8 +1,7 @@
-package nl.kadaster.land_administration.query
+package nl.kadaster.land_administration.query.ladm
 
-import nl.kadaster.land_administration.coreapi.*
+import nl.kadaster.land_administration.core.events.SubjectCreatedEvent
 import org.axonframework.eventhandling.EventHandler
-import org.axonframework.queryhandling.QueryHandler
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Component
@@ -11,12 +10,12 @@ import javax.persistence.Id
 
 @Entity
 data class SubjectView(
-        @Id val subjectId: Long) {
+        @Id val subjectId: String) {
 
-    constructor() : this(-1)
+    constructor() : this("undefined")
 }
 
-interface SubjectViewRepository : JpaRepository<SubjectView, Long> {
+interface SubjectViewRepository : JpaRepository<SubjectView, String> {
     @Query("select max(i.subjectId) from SubjectView as i")
     fun maxSubjectId(): Long?
 }
@@ -28,11 +27,6 @@ class SubjectProjector(private val repository: SubjectViewRepository) {
     fun on(event: SubjectCreatedEvent) {
         val subjectView = SubjectView(event.subject.localId)
         repository.save(subjectView)
-    }
-
-    @QueryHandler
-    fun handle(query: MaxSubjectId): Long {
-        return repository.maxSubjectId() ?: 0
     }
 
 }
