@@ -1,10 +1,7 @@
 package nl.kadaster.land_administration.command.handlers
 
-import nl.kadaster.land_administration.command.api.CommandException
-import nl.kadaster.land_administration.command.api.SharesTotalNotValid
-import nl.kadaster.land_administration.command.api.CreateObjectCommand
-import nl.kadaster.land_administration.command.api.CreateOwnershipCommand
-import nl.kadaster.land_administration.command.api.TransferOwnerShipCommand
+import nl.kadaster.land_administration.command.api.*
+import nl.kadaster.land_administration.command.util.IdentifierGenerator
 import nl.kadaster.land_administration.core.commons.ObjectId
 import nl.kadaster.land_administration.core.commons.RightId
 import nl.kadaster.land_administration.core.commons.Share
@@ -16,9 +13,13 @@ import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.spring.stereotype.Aggregate
+import org.springframework.beans.factory.annotation.Autowired
 
 @Aggregate
 class Object {
+
+    @Autowired
+    private lateinit var identifierGenerator: IdentifierGenerator
 
     @AggregateIdentifier
     private lateinit var aggregateId: ObjectId
@@ -37,7 +38,8 @@ class Object {
     fun handle(command: CreateOwnershipCommand) {
         validateOwnershipIsNotSetYet()
         validateFractionTotalOf1(command)
-        AggregateLifecycle.apply(OwnershipCreatedEvent(aggregateId, RightId(aggregateId.localId), command.owners))
+        val rightId = identifierGenerator.nextRightId()
+        AggregateLifecycle.apply(OwnershipCreatedEvent(aggregateId, rightId, command.owners))
     }
 
     private fun validateFractionTotalOf1(command: CreateOwnershipCommand) {

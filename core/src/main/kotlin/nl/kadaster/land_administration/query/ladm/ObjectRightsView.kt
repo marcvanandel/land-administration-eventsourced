@@ -10,7 +10,6 @@ import nl.kadaster.land_administration.coreapi.ObjectRightsQuery
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.queryhandling.QueryHandler
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.persistence.*

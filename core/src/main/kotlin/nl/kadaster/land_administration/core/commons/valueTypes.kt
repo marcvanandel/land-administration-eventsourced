@@ -23,6 +23,7 @@ data class RightId(override val localId: String) : ObjectIdentifier(namespace, l
         const val namespace: String = "RIGHT"
     }
 }
+
 data class SubjectId(override val localId: String) : ObjectIdentifier(namespace, localId) {
     companion object {
         const val namespace: String = "SUBJECT"
@@ -78,4 +79,3 @@ operator fun ClosedRange<Fraction>.iterator() =
             override fun next() = curr++
 
         }
-

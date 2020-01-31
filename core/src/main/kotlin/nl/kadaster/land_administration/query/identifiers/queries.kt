@@ -9,9 +9,11 @@ class LatestIdentifiers
 class LatestObjectIdLocalId {
     val type: String = ObjectId.namespace
 }
+
 class LatestRightIdLocalId {
     val type: String = RightId.namespace
 }
+
 class LatestSubjectIdLocalId {
     val type: String = SubjectId.namespace
 }

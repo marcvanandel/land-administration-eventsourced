@@ -17,7 +17,7 @@ import kotlin.math.max
 @Entity
 data class IdentifierView(
         @Id val identifierType: String,
-        var value: String = "00000000000000"
+        var value: String = format("%015d", 0)
 ) {
     constructor() : this("identifier")
 }
@@ -57,15 +57,12 @@ class IdentifierProjector(private val repository: IdentifierViewRepository) {
 
     @QueryHandler
     fun handle(query: LatestIdentifiers): MutableList<IdentifierView> {
-        val value = repository.findAll()
-        println(value)
-        return value
+        return repository.findAll()
     }
 
     @QueryHandler
     fun handle(query: LatestObjectIdLocalId): Optional<String>? {
-        val opt = repository.findById(query.type).map { it.value }
-        return opt
+        return repository.findById(query.type).map { it.value }
     }
 
     @QueryHandler
