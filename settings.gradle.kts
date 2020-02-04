@@ -1,6 +1,8 @@
-//rootProject.name = "land-administration-eventsourced"
+rootProject.name = "land-administration-eventsourced"
 
-//include("api")
+include("events")
 include("core")
-//include("boot")
-//include("ws")
+include("query-identifiers")
+include("query-ladm")
+include("ws")
+include("boot")

@@ -1,9 +1,9 @@
 package nl.kadaster.land_administration.domain.state.model
 
-import nl.kadaster.land_administration.coreapi.Fraction
-import nl.kadaster.land_administration.coreapi.ObjectIdentifier
-import nl.kadaster.land_administration.coreapi.RightId
-import nl.kadaster.land_administration.coreapi.RightType
+import nl.kadaster.land_administration.core.commons.Fraction
+import nl.kadaster.land_administration.core.commons.ObjectIdentifier
+import nl.kadaster.land_administration.core.commons.RightId
+import nl.kadaster.land_administration.core.commons.RightType
 import java.time.LocalDateTime
 
 class Right(
