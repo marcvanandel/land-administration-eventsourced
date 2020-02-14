@@ -1,20 +1,27 @@
 package nl.kadaster.land_administration.command.handlers
 
 import nl.kadaster.land_administration.command.api.*
+import nl.kadaster.land_administration.command.model.Fraction
+import nl.kadaster.land_administration.command.model.Right
+import nl.kadaster.land_administration.command.model.RightRestrictionOrResponsibility
 import nl.kadaster.land_administration.command.util.IdentifierGenerator
 import nl.kadaster.land_administration.core.commons.ObjectId
 import nl.kadaster.land_administration.core.commons.RightId
-import nl.kadaster.land_administration.core.commons.Share
-import nl.kadaster.land_administration.core.events.ObjectCreatedEvent
-import nl.kadaster.land_administration.core.events.OwnershipCreatedEvent
-import nl.kadaster.land_administration.core.events.OwnershipTransferredEvent
+import nl.kadaster.land_administration.core.commons.RightType
+import nl.kadaster.land_administration.core.event.ObjectCreatedEvent
+import nl.kadaster.land_administration.core.event.RightCreated
+import nl.kadaster.land_administration.core.event.RightTransferred
+import nl.kadaster.land_administration.core.event.model.Share
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.spring.stereotype.Aggregate
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
+import java.time.LocalDateTime
 
+@Profile("command")
 @Aggregate
 class Object {
 
@@ -23,7 +30,8 @@ class Object {
 
     @AggregateIdentifier
     private lateinit var aggregateId: ObjectId
-    var ownership: Ownership? = null
+
+    private val rightsRestrictionsAndResponsibilities: MutableSet<RightRestrictionOrResponsibility> = mutableSetOf<RightRestrictionOrResponsibility>()
 
     // Required by Axon
     constructor()
@@ -39,7 +47,16 @@ class Object {
         validateOwnershipIsNotSetYet()
         validateFractionTotalOf1(command)
         val rightId = identifierGenerator.nextRightId()
-        AggregateLifecycle.apply(OwnershipCreatedEvent(aggregateId, rightId, command.owners))
+        val firstShare = command.owners.first()
+        AggregateLifecycle.apply(
+                RightCreated(aggregateId,
+                        nl.kadaster.land_administration.core.event.model.Right(description = "the ownership descr.",
+                                rightId = rightId,
+                                party = firstShare.subjectId,
+                                share = Share(firstShare.fraction.numerator, firstShare.fraction.denominator),
+                                shareCheck = false,
+                                timeSpec = LocalDateTime.now(),
+                                type = RightType.OWNERSHIP)))
     }
 
     private fun validateFractionTotalOf1(command: CreateOwnershipCommand) {
@@ -51,21 +68,33 @@ class Object {
     }
 
     private fun validateOwnershipIsNotSetYet() {
-        if (ownership != null)
-            throw CommandException("Object [$aggregateId] already has an ownership right ([${ownership!!.rightId}])")
+        if (rightsRestrictionsAndResponsibilities.isNotEmpty())
+            throw CommandException(
+                    "Object [$aggregateId] already has an ownership right ([${rightsRestrictionsAndResponsibilities.first().party}])")
     }
 
     @CommandHandler
     fun handle(command: TransferOwnerShipCommand): String {
-        if (ownership == null || !ownership!!.shares.contains(command.sellingShare))
+        if (!rightsRestrictionsAndResponsibilities.map { r -> r.party }.contains(command.sellingShare.subjectId))
             throw CommandException("Could not transfer ownership 'cause this share [${command.sellingShare}] has no share in current ownership!")
         else {
+            val sellingRightId = rightsRestrictionsAndResponsibilities
+                    .filter { r -> r.party == command.sellingShare.subjectId }
+                    .map { r -> r.rId }.first() as RightId
+            val newRightId = identifierGenerator.nextRightId()
+            val firstBuyer = command.buyingSubjects.first()
             AggregateLifecycle.apply(
-                    OwnershipTransferredEvent(
+                    RightTransferred(
                             command.objectId,
-                            ownership!!.rightId,
-                            command.sellingShare,
-                            command.buyingSubjects))
+                            sellingRightId,
+                            nl.kadaster.land_administration.core.event.model.Right(description = "the ownership descr.",
+                                    rightId = newRightId,
+                                    party = firstBuyer.subjectId,
+                                    share = Share(firstBuyer.fraction.numerator, firstBuyer.fraction.denominator),
+                                    shareCheck = false,
+                                    timeSpec = LocalDateTime.now(),
+                                    type = RightType.OWNERSHIP)
+                    ))
         }
         return "Ownership transferred!"
     }
@@ -76,17 +105,33 @@ class Object {
     }
 
     @EventSourcingHandler
-    fun on(event: OwnershipCreatedEvent) {
-        ownership = Ownership(event.rightId)
-        ownership!!.shares.addAll(event.shares)
+    fun on(event: RightCreated) {
+        rightsRestrictionsAndResponsibilities.add(
+                Right(
+                        description = "The ownership of this parcel",
+                        rId = event.right.rightId,
+                        party = event.right.party,
+                        share = Fraction(event.right.share.numerator, event.right.share.denominator),
+                        shareCheck = false,
+                        timeSpec = LocalDateTime.now(),
+                        type = RightType.OWNERSHIP
+                ))
     }
 
     @EventSourcingHandler
-    fun on(event: OwnershipTransferredEvent) {
-        ownership!!.shares.remove(event.sellingShare)
-        ownership!!.shares.addAll(event.buyingSubjects)
+    fun on(event: RightTransferred) {
+        rightsRestrictionsAndResponsibilities.removeIf { r ->
+            r.rId == event.sellingRight
+        }
+        rightsRestrictionsAndResponsibilities.add(
+                Right(
+                        description = "The ownership of this parcel",
+                        rId = event.buyingRight.rightId,
+                        party = event.buyingRight.party,
+                        share = Fraction(event.buyingRight.share.numerator, event.buyingRight.share.denominator),
+                        shareCheck = false,
+                        timeSpec = LocalDateTime.now(),
+                        type = RightType.OWNERSHIP
+                ))
     }
-
 }
-
-data class Ownership(val rightId: RightId, val shares: MutableSet<Share> = mutableSetOf())

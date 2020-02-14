@@ -1,0 +1,22 @@
+### Create Object
+POST http://localhost:8080/objects/create
+
+### Create Subject (not yet necessary)
+POST http://localhost:8080/objects/create
+
+### Create Right[type:Ownership] by the first transfer
+POST http://localhost:8080/objects/000000000000001/createOwnership/000000000000001
+
+### Transfer Right[type:Ownership] 1 > 2
+POST http://localhost:8080/objects/000000000000001/transferOwnership/from/000000000000001/to/000000000000002
+
+### Transfer Right[type:Ownership] 2 > 1
+POST http://localhost:8080/objects/000000000000001/transferOwnership/from/000000000000002/to/000000000000001
+
+### Query LADM: Get object state #1
+GET http://localh¾ost:8080/objects/000000000000001
+
+### Query Identifiers: Get latest identifiers used
+GET http://localhost:8080/identifiers
+
+###

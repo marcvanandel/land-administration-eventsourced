@@ -1,11 +1,12 @@
 package nl.kadaster.land_administration.query.identifiers
 
 import nl.kadaster.land_administration.core.commons.ObjectIdentifier
-import nl.kadaster.land_administration.core.events.ObjectCreatedEvent
-import nl.kadaster.land_administration.core.events.OwnershipCreatedEvent
-import nl.kadaster.land_administration.core.events.SubjectCreatedEvent
+import nl.kadaster.land_administration.core.event.ObjectCreatedEvent
+import nl.kadaster.land_administration.core.event.RightCreated
+import nl.kadaster.land_administration.core.event.SubjectCreatedEvent
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.queryhandling.QueryHandler
+import org.springframework.context.annotation.Profile
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 import java.lang.String.format
@@ -46,8 +47,8 @@ class IdentifierProjector(private val repository: IdentifierViewRepository) {
     }
 
     @EventHandler
-    fun on(event: OwnershipCreatedEvent) {
-        addOrUpdateView(event.rightId)
+    fun on(event: RightCreated) {
+        addOrUpdateView(event.right.rightId)
     }
 
     @EventHandler

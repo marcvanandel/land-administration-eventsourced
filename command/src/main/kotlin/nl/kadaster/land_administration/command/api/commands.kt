@@ -1,7 +1,7 @@
 package nl.kadaster.land_administration.command.api
 
+import nl.kadaster.land_administration.command.model.Share
 import nl.kadaster.land_administration.core.commons.ObjectId
-import nl.kadaster.land_administration.core.commons.Share
 import nl.kadaster.land_administration.core.commons.SubjectId
 import org.axonframework.commandhandling.RoutingKey
 import org.axonframework.modelling.command.TargetAggregateIdentifier

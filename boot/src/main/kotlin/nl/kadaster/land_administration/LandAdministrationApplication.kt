@@ -11,5 +11,6 @@ class LandAdministrationApplication
 fun main(args: Array<String>) {
     runApplication<LandAdministrationApplication>(*args) {
         setBannerMode(Banner.Mode.OFF)
+
     }
 }

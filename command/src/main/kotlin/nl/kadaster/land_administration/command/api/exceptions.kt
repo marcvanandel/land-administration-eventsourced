@@ -1,6 +1,6 @@
 package nl.kadaster.land_administration.command.api
 
-import nl.kadaster.land_administration.core.commons.Fraction
+import nl.kadaster.land_administration.command.model.Fraction
 
 open class CommandException(override val message: String, override val cause: Throwable? = null) : RuntimeException(message, cause)
 

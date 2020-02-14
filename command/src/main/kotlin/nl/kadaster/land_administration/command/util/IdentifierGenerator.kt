@@ -8,8 +8,10 @@ import nl.kadaster.land_administration.query.identifiers.LatestRightIdLocalId
 import nl.kadaster.land_administration.query.identifiers.LatestSubjectIdLocalId
 import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.QueryGateway
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
+//@Profile("command")
 @Component
 class IdentifierGenerator(private val queryGateway: QueryGateway) {
 
