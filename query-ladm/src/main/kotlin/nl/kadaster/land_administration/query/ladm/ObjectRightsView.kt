@@ -91,6 +91,7 @@ class ObjectRightsProjector(private val repository: ObjectRightsViewRepository) 
                     timeSpec = LocalDateTime.now(),
                     type = RightType.OWNERSHIP
             )
+            logger.debug("replacing right [{}] with right [{}]", curRight, newRight)
             view.rights.remove(curRight)
             view.rights.add(newRight)
         }

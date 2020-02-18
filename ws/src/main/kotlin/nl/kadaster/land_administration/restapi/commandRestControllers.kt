@@ -11,12 +11,13 @@ import nl.kadaster.land_administration.core.commons.ObjectId
 import nl.kadaster.land_administration.core.commons.SubjectId
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-//@Profile("command")
+@Profile("command")
 @RestController
 @RequestMapping("/objects")
 class CommandObjectController(
@@ -70,7 +71,7 @@ class CommandObjectController(
 
 }
 
-//@Profile("command")
+@Profile("command")
 @RestController
 @RequestMapping("/subjects")
 class CommandSubjectController(

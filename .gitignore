@@ -17,6 +17,7 @@ target/
 
 # Ignore Gradle build output directory
 build
+.kotlintest/
 
 # Ignore local response test file
 dump.json

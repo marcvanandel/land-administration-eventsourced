@@ -42,7 +42,6 @@ configure(subprojects) {
         "implementation"("org.axonframework:axon-spring-boot-starter:$axonFrameworkVersion")
 
         "implementation"("org.springframework.boot:spring-boot-starter-data-jpa")
-        "implementation"("org.springframework.boot:spring-boot-starter-mustache")
         "implementation"("org.springframework.boot:spring-boot-starter-web")
         "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin")
         "implementation"("org.jetbrains.kotlin:kotlin-reflect")
@@ -69,6 +68,10 @@ configure(subprojects) {
     }
     tasks.getByName<BootJar>("bootJar") {
         enabled = false
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 

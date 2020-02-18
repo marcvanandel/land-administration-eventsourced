@@ -4,9 +4,12 @@ import nl.kadaster.land_administration.core.commons.ObjectIdentifier
 import nl.kadaster.land_administration.core.event.ObjectCreatedEvent
 import nl.kadaster.land_administration.core.event.RightCreated
 import nl.kadaster.land_administration.core.event.SubjectCreatedEvent
+import nl.kadaster.land_administration.query.identifiers.api.LatestIdentifiers
+import nl.kadaster.land_administration.query.identifiers.api.LatestObjectIdLocalId
+import nl.kadaster.land_administration.query.identifiers.api.LatestRightIdLocalId
+import nl.kadaster.land_administration.query.identifiers.api.LatestSubjectIdLocalId
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.queryhandling.QueryHandler
-import org.springframework.context.annotation.Profile
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 import java.lang.String.format
