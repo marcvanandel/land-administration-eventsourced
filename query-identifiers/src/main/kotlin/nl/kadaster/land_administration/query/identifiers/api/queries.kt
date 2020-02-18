@@ -1,4 +1,4 @@
-package nl.kadaster.land_administration.query.identifiers
+package nl.kadaster.land_administration.query.identifiers.api
 
 import nl.kadaster.land_administration.core.commons.ObjectId
 import nl.kadaster.land_administration.core.commons.RightId

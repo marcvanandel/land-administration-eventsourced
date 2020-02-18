@@ -1,4 +1,4 @@
-package nl.kadaster.land_administration.domain.state.model
+package nl.kadaster.land_administration.command.model
 
 import nl.kadaster.land_administration.core.commons.SubjectId
 

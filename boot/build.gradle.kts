@@ -7,6 +7,7 @@ plugins {
 dependencies {
     implementation(project(":ws"))
     implementation("io.swagger:swagger-annotations:1.6.0")
+    implementation("org.springframework.boot:spring-boot-starter-mustache")
 }
 
 tasks.getByName<BootJar>("bootJar") {

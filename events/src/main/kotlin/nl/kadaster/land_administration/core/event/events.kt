@@ -1,9 +1,9 @@
-package nl.kadaster.land_administration.core.events
+package nl.kadaster.land_administration.core.event
 
 import nl.kadaster.land_administration.core.commons.ObjectId
 import nl.kadaster.land_administration.core.commons.RightId
-import nl.kadaster.land_administration.core.commons.Share
 import nl.kadaster.land_administration.core.commons.SubjectId
+import nl.kadaster.land_administration.core.event.model.Right
 
 data class ObjectCreatedEvent(
         val objectId: ObjectId
@@ -13,15 +13,13 @@ data class SubjectCreatedEvent(
         val subject: SubjectId
 )
 
-data class OwnershipCreatedEvent(
+data class RightCreated(
         val objectId: ObjectId,
-        val rightId: RightId,
-        val shares: Set<Share>
+        val right: Right
 )
 
-data class OwnershipTransferredEvent(
+data class RightTransferred(
         val objectId: ObjectId,
-        val rightId: RightId,
-        val sellingShare: Share,
-        val buyingSubjects: Set<Share>
+        val sellingRight: RightId,
+        val buyingRight: Right
 )
