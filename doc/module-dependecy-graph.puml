@@ -1,0 +1,45 @@
+@startuml "dependency-graph"
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Component.puml
+
+Component(boot, "boot", "gradle module", "Spring Boot Application")
+
+Component(rest, "rest", "gradle module", "RESTful services")
+Component(graphql, "graphql", "gradle module", "Future feature")
+
+Rel(boot, rest, "include")
+Rel(boot, graphql, "include")
+
+Component(events, "Events", "gradle module", "The events are the core API in the system")
+
+Container_Boundary(command1,"command profile" ) {
+    Component(command, "command", "gradle module", "The command handling component")
+    Component(commandApi, "command-api", "gradle module", "The commands API")
+
+    Rel_U(command, commandApi, "handles")
+    Rel(command, events, "produces")
+
+    ' for now in the command profile
+    Component(queryIdentifiersApi, "query-identifiers-api", "gradle module", "The identifiers view API")
+    Component(queryIdentifiers, "query-identifiers", "gradle module", "The last identifiers in the event stream")
+
+    Rel_U(queryIdentifiers, queryIdentifiersApi, "handles")
+    Rel(queryIdentifiers, events, "listens")
+}
+
+Container_Boundary(query1,"query-ladm profile" ) {
+    Component(queryLadmApi, "query-ladm-api", "gradle module", "The LADM view API")
+    Component(queryLadm, "query-ladm", "gradle module", "The LADM view on the event stream")
+
+    Rel_U(queryLadm, queryLadmApi, "handles")
+    Rel(queryLadm, events, "listens")
+}
+
+Rel(rest, commandApi, "use","via AxonServer")
+Rel(rest, queryLadmApi, "use","via AxonServer")
+Rel(rest, queryIdentifiersApi, "use","via AxonServer")
+
+Rel(graphql, commandApi, "use","via AxonServer")
+Rel(graphql, queryLadmApi, "use","via AxonServer")
+Rel(graphql, queryIdentifiersApi, "use","via AxonServer")
+
+@enduml

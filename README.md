@@ -28,7 +28,7 @@ Each Query component has its own (separate) API module.
 Events are the CoreAPI of the system and there are some other value types and utils in this module as well.
 
 
-<img src="Land_Administration_System_Module_Structure.png" alt="Land Administration System Module Structure">
+<img src="dependency_graph.png" alt="Land Administration System Dependency Graph">
 
 
 * module `command-api` -> All available Commands
@@ -38,6 +38,13 @@ Events are the CoreAPI of the system and there are some other value types and ut
 * module `query-ladm` -> View LADM: The EventListener as well as the Query Handler
 * module `query-identifiers-api` -> View Identifiers: The Query API
 * module `query-identifiers` -> View Identifiers: The EventListener as well as the Query Handler
+
+In runtime there are these containers:
+
+
+<img src="runtime_containers.png" alt="Land Administration System Runtime Containers">
+
+
 
 ## Development
 

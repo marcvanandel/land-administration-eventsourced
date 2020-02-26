@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":ws"))
+    implementation(project(":rest"))
     implementation("io.swagger:swagger-annotations:1.6.0")
     implementation("org.springframework.boot:spring-boot-starter-mustache")
 }

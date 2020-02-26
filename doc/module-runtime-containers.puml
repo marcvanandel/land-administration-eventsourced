@@ -1,0 +1,35 @@
+@startuml "runtime-containers"
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Component.puml
+
+System(client, "HTTP Client")
+
+Container(axonServer, "AxonServer", "Docker Container")
+
+Container(bootCommand, "boot-command", "Spring Boot") {
+    Component(restCommand, "rest-command", "command profile", "Spring REST controllers")
+    Rel(restCommand, axonServer, "post commands")
+
+    Component(command, "command", "Command Handlers")
+    Rel(command, axonServer, "produce events")
+    Rel(axonServer, command, "receive commands")
+}
+
+Container(bootQueryLadm, "boot-query-ladm", "Spring Boot") {
+  Component(restQueryLadm, "rest-query-ladm", "query-ladm profile", "Spring REST controllers")
+  Rel(restQueryLadm, axonServer, "post queries")
+
+  Component(queryLadmEventListener, "Query LADM Event Listener", "query profile")
+  Rel(axonServer, queryLadmEventListener, "consume events")
+  Rel(axonServer, queryLadmEventListener, "receive queries")
+  Rel(queryLadmEventListener, axonServer, "answer queries")
+
+}
+
+ContainerDb(ladmDb, "LADM Query DB", "RDBMS")
+Rel(queryLadmEventListener, ladmDb, "update")
+Rel(restQueryLadm, ladmDb, "read")
+
+Rel(client, restCommand, "http:8081")
+Rel(client, restQueryLadm, "http:8082")
+
+@enduml
