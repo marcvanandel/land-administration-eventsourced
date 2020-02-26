@@ -1,11 +1,6 @@
 package nl.kadaster.land_administration.restapi
 
-import nl.kadaster.land_administration.command.api.CreateObjectCommand
-import nl.kadaster.land_administration.command.api.CreateOwnershipCommand
-import nl.kadaster.land_administration.command.api.CreateSubjectCommand
-import nl.kadaster.land_administration.command.api.TransferOwnerShipCommand
-import nl.kadaster.land_administration.command.model.Fraction
-import nl.kadaster.land_administration.command.model.Share
+import nl.kadaster.land_administration.command.api.*
 import nl.kadaster.land_administration.command.util.IdentifierGenerator
 import nl.kadaster.land_administration.core.commons.ObjectId
 import nl.kadaster.land_administration.core.commons.SubjectId
@@ -42,7 +37,7 @@ class CommandObjectController(
         try {
             val command = CreateOwnershipCommand(
                     objectId = ObjectId(objectId),
-                    owners = setOf(Share(SubjectId(buyingSubjectId), Fraction(1, 1))))
+                    owners = setOf(Share(SubjectId(buyingSubjectId), 1, 1)))
             commandGateway.send<String>(command)
             logger.debug("Command for ownership creation posted: {}", command)
         } catch (e: Exception) {
@@ -59,8 +54,8 @@ class CommandObjectController(
         try {
             val command = TransferOwnerShipCommand(
                     objectId = ObjectId(objectId),
-                    sellingShare = Share(SubjectId(sellingSubjectId), Fraction(1, 1)),
-                    buyingSubjects = setOf(Share(SubjectId(buyingSubjectId), Fraction(1, 1))))
+                    sellingShare = Share(SubjectId(sellingSubjectId), 1, 1),
+                    buyingSubjects = setOf(Share(SubjectId(buyingSubjectId), 1, 1)))
             commandGateway.send<String>(command)
             logger.debug("Command for ownership transfer posted: {}", command)
 

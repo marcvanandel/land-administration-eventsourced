@@ -1,5 +1,7 @@
 package nl.kadaster.land_administration.command.handlers
 
+import nl.kadaster.land_administration.command.util.CommandException
+import nl.kadaster.land_administration.command.util.SharesTotalNotValid
 import nl.kadaster.land_administration.command.api.*
 import nl.kadaster.land_administration.command.model.Fraction
 import nl.kadaster.land_administration.command.model.Right
@@ -53,7 +55,7 @@ class Object {
                         nl.kadaster.land_administration.core.event.model.Right(description = "the ownership descr.",
                                 rightId = rightId,
                                 party = firstShare.subjectId,
-                                share = Share(firstShare.fraction.numerator, firstShare.fraction.denominator),
+                                share = Share(firstShare.numerator, firstShare.denominator),
                                 shareCheck = false,
                                 timeSpec = LocalDateTime.now(),
                                 type = RightType.OWNERSHIP)))
@@ -61,7 +63,7 @@ class Object {
 
     private fun validateFractionTotalOf1(command: CreateOwnershipCommand) {
         val sum = command.owners
-                .map { s -> s.fraction }
+                .map { s -> Fraction(s.numerator, s.denominator) }
                 .reduce { acc, fraction -> acc.plus(fraction) }
         if (sum.numerator / sum.denominator != 1)
             throw SharesTotalNotValid(sum)
@@ -90,7 +92,7 @@ class Object {
                             nl.kadaster.land_administration.core.event.model.Right(description = "the ownership descr.",
                                     rightId = newRightId,
                                     party = firstBuyer.subjectId,
-                                    share = Share(firstBuyer.fraction.numerator, firstBuyer.fraction.denominator),
+                                    share = Share(firstBuyer.numerator, firstBuyer.denominator),
                                     shareCheck = false,
                                     timeSpec = LocalDateTime.now(),
                                     type = RightType.OWNERSHIP)

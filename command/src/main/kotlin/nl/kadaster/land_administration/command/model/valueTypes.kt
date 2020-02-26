@@ -34,7 +34,6 @@ data class Fraction(val numerator: Int, val denominator: Int) : Comparable<Fract
     operator fun invoke(prefix: String = "") = println(prefix + toString())
 }
 
-
 operator fun Fraction.get(ind: Int) =
         when (ind) {
             0 -> numerator
