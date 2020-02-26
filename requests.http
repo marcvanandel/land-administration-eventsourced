@@ -1,6 +1,14 @@
 ### Create Object
 POST http://localhost:8081/objects/create
 
+> {%
+client.test("Object created successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.headers.valueOf("Location") != null, "No location returned in the response")
+});
+%}
+
+
 ### Create Subject (not yet necessary)
 POST http://localhost:8081/subjects/create
 

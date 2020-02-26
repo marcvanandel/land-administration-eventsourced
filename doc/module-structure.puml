@@ -1,0 +1,23 @@
+@startuml "Land Administration System Module Structure"
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+Container(command, "command", "The command handling component")
+Container(commandApi, "command-api", "The commands API")
+
+Rel_U(command, commandApi, "handles")
+
+Container(events, "Events", "The events are the core API in the system")
+
+Rel(command, events, "produces")
+
+Container(queryLadmApi, "query-ladm-api", "The LADM view API")
+Container(queryLadm, "query-ladm", "The LADM view on the event stream", "Query")
+Container(queryIdentifiersApi, "query-identifiers-api", "The identifiers view API")
+Container(queryIdentifiers, "query-identifiers", "The last identifiers in the event stream", "Query")
+
+Rel_U(queryLadm, queryLadmApi, "handles")
+Rel(events, queryLadm, "listens")
+Rel_U(queryIdentifiers, queryIdentifiersApi, "handles")
+Rel(events, queryIdentifiers, "listens")
+
+@enduml
