@@ -1,6 +1,5 @@
 package nl.kadaster.land_administration.command.api
 
-import nl.kadaster.land_administration.command.model.Share
 import nl.kadaster.land_administration.core.commons.ObjectId
 import nl.kadaster.land_administration.core.commons.SubjectId
 import org.axonframework.commandhandling.RoutingKey
@@ -28,3 +27,5 @@ data class TransferOwnerShipCommand(
         val sellingShare: Share,
         val buyingSubjects: Set<Share>
 ) : ObjectCommand(objectId)
+
+data class Share(val subjectId: SubjectId, val numerator: Int, val denominator: Int)

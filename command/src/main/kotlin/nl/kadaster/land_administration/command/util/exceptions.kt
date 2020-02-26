@@ -1,4 +1,4 @@
-package nl.kadaster.land_administration.command.api
+package nl.kadaster.land_administration.command.util
 
 import nl.kadaster.land_administration.command.model.Fraction
 

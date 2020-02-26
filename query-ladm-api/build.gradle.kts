@@ -1,3 +1,3 @@
 dependencies {
-    api(project(":events"))
+    "api"(project(":events"))
 }
