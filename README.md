@@ -11,7 +11,7 @@ This is a very (!) simplified system of how [Kadaster](www.kadaster.nl) is using
 
 ## Background info
 
-- Land Administration Domain Model (ISO19152) - submitted by [FIG](http://www.fig.net)
+- Land Administration Domain Model (ISO 19152) - submitted by [FIG](http://www.fig.net)
   - [TU Delft Wiki](https://wiki.tudelft.nl/bin/view/Research/ISO19152/WebHome)
   - [FIG article of the month 2019 Dec](http://www.fig.net/resources/monthly_articles/2019/Lemmen_etal_December_2019.asp)
   - [LADM UML](https://github.com/ISO-TC211/HMMG) (@ Github)
@@ -27,51 +27,35 @@ There's only one Command side and multiple Query sides.
 Each Query component has its own (separate) API module.
 Events are the CoreAPI of the system and there are some other value types and utils in this module as well.
 
+
 <img src="Land_Administration_System_Module_Structure.png" alt="Land Administration System Module Structure">
+
+
+* module `command-api` -> All available Commands
+* module `command` -> Command Handlers
+* module `events` -> Core API of the system including some value types and utils
+* module `query-ladm-api` -> View LADM: The Query API
+* module `query-ladm` -> View LADM: The EventListener as well as the Query Handler
+* module `query-identifiers-api` -> View Identifiers: The Query API
+* module `query-identifiers` -> View Identifiers: The EventListener as well as the Query Handler
 
 ## Development
 
+### Build
+
+The build uses [Gradle](https://gradle.org/) with the [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html)
+
+```
+./gradlew build
+```
+
 ### Running
 
-1. Start AxonServer:
-    ```
-   docker run --rm -d --name my-axon-server -p 8024:8024 -p 8124:8124 --hostname axonserver -e AXONSERVER_HOSTNAME=axonserver axoniq/axonserver
-    ```
-1. Start Core: `:core/nl.kadaster.land_administration.LandAdministration.main()`
+1. Start AxonServer: `./axon-server.sh start` (or `restart`)
+1. Start Core: `:boot/nl.kadaster.land_administration.LandAdministration.main()`
+   1. Profile `command` for the Command instances and REST services (incl. Identifiers Query instances and REST services)
+   1. Profile `query-ladm` for the LADM Query instances and REST services
 
 ### Shutdown
 
-1. Stop AxonServer:
-```
-docker stop my-axon-server
-```
-
-### Structure
-
-> UNDER CONSTRUCTION
-
-#### module: view-ownership
-
-A view for getting the current owner of a parcel. This can be implemented lazy load, i.e.,  when requesting a given parcel all events for that parcel are replayed.
-
-### module: view-ownership-history
-
-A view for obtaining the ownership with all its history. This can not be implemented lazy load, i.e., when requesting the ownsership of a given subject, all associated parcels are unknown.
-
-# Kadaster Open Source & Event Sourced
-
-- Engels
-- Event Sourced
-- LADM (ISO 19152)
-- DSLs?
-- Technology stack:
-  - JVM?
-    - Java
-    - Scala
-    - Clojure
-  - Kafka?
-- Hoe krijgen we dit als business pitch voor elkaar?
-  - Kadaster International
-  - Bestuur
-  - MBP: partner (niet alleen geo!), platform (niet alleen geo!)
-  
+1. Stop AxonServer: `./axon-server.sh stop`
