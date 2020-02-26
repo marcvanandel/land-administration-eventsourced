@@ -8,9 +8,11 @@ import nl.kadaster.land_administration.query.identifiers.api.LatestRightIdLocalI
 import nl.kadaster.land_administration.query.identifiers.api.LatestSubjectIdLocalId
 import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.QueryGateway
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
+import java.util.*
 
-//@Profile("command")
+@Profile("command")
 @Component
 class IdentifierGenerator(private val queryGateway: QueryGateway) {
 
@@ -22,7 +24,7 @@ class IdentifierGenerator(private val queryGateway: QueryGateway) {
     }
 
     fun nextRightId(): RightId {
-        return RightId(java.lang.String.format("%015d",  System.currentTimeMillis()))
+        return RightId(UUID.randomUUID().toString())
     }
 
     fun nextSubjectId(): SubjectId {
