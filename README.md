@@ -20,7 +20,9 @@ This is a very (!) simplified system of how [Kadaster](www.kadaster.nl) is using
   - [github.com/AxonFramework](https://github.com/AxonFramework/AxonFramework)
   - [github.com/AxonServer](https://github.com/AxonIQ/axon-server-se)
 
-## Architecture & Structure
+## Architecture
+
+### Structure
 
 To guarantee (and enforce) the segregation of Commands, Events and Queries each API is put into a separate module. 
 There's only one Command side and multiple Query sides.
@@ -45,8 +47,28 @@ In runtime there are these containers:
 <img src="runtime_containers.png" alt="Land Administration System Runtime Containers">
 
 
+### TechStack
+
+- Java based with more Functional Programming options: [Kotlin](https://kotlinlang.org/)
+- Building and dependency management: [Gradle](https://gradle.org/)
+- For CQRS and Event Sourcing with Java: [AxonFramework](https://axoniq.io/product-overview/axon-framework)
+- Running with Spring Boot: [Spring Boot](https://spring.io/projects/spring-boot) (and the whole [Spring Framework Stack](https://spring.io/))
+
 
 ## Development
+
+### Local Development Set Up
+
+You'll the Java Virtual Machine to run and develop locally. 
+An easy way to install and control several versions of Development kits is [SDKman](https://sdkman.io/)
+First [install](https://sdkman.io/install) this and next install the Java SDK:
+
+```
+sdk install java 13.0.2.hs-adpt
+```
+
+No need to install Gradle (because of the Gradle Wrapper) but if you would like to install it, look at [Scoop](https://scoop.sh/): `scoop install gradle`
+
 
 ### Build
 
