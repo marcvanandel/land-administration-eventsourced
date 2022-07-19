@@ -2,14 +2,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    val kotlinVersion = "1.3.61"
-    val springBootVersion = "2.2.4.RELEASE"
+    val kotlinVersion = "1.7.10"
+    val springBootVersion = "2.7.1"
     idea
     kotlin("jvm") version kotlinVersion apply false
     kotlin("plugin.jpa") version kotlinVersion apply false
     kotlin("plugin.spring") version kotlinVersion apply false
     id("org.springframework.boot") version springBootVersion apply false
-    id("io.spring.dependency-management") version "1.0.8.RELEASE" apply false
+    id("io.spring.dependency-management") version "1.0.12.RELEASE" apply false
     java
 }
 
@@ -32,8 +32,8 @@ configure(subprojects) {
     apply(plugin = "org.gradle.java")
 
     dependencies {
-        val arrowVersion = "0.9.0"
-        val axonFrameworkVersion = "4.2.1"
+        val arrowVersion = "0.12.1"
+        val axonFrameworkVersion = "4.5.14"
 
         "implementation"(kotlin("stdlib"))      // version comes from applied kotlin plugin
         "implementation"(kotlin("reflect"))     // version comes from applied kotlin plugin
@@ -51,15 +51,15 @@ configure(subprojects) {
         "testImplementation"("org.springframework.boot:spring-boot-starter-test") {
             exclude(module = "junit")
         }
-        "testImplementation"("io.kotlintest:kotlintest-runner-junit5:3.3.2")
-        "testImplementation"("io.kotlintest:kotlintest-assertions-arrow:3.3.2")
+        "testImplementation"("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+        "testImplementation"(group = "io.arrow-kt", name = "arrow-core-test", version = arrowVersion)
         "testImplementation"("org.mockito:mockito-all:1.10.19")
     }
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "1.8"
+            jvmTarget = "11"
         }
     }
 
