@@ -15,6 +15,10 @@ This is a very (!) simplified system of how [Kadaster](www.kadaster.nl) is using
   - [TU Delft Wiki](https://wiki.tudelft.nl/bin/view/Research/ISO19152/WebHome)
   - [FIG article of the month 2019 Dec](http://www.fig.net/resources/monthly_articles/2019/Lemmen_etal_December_2019.asp)
   - [LADM UML](https://github.com/ISO-TC211/HMMG) (@ Github)
+  - [Extending LADM to support workflows and process models](https://www.sciencedirect.com/science/article/abs/pii/S0264837721000818) - Vranić et al. (2021), Land Use Policy
+  - [Application of workflow management system to the modelling of processes in land administration systems](https://www.researchgate.net/publication/324560402_Application_of_workflow_management_system_to_the_modelling_of_processes_in_land_administration_systems) - Vranić et al. (2018), 
+  - [Alignment of standards through semantic tools – The case of land administration](https://www.sciencedirect.com/science/article/abs/pii/S0264837721001046) - Stubkjær et al (2021), Land Use Policy
+  - [Cadastre and Land Administration Thesaurus (CaLAThe)](http://www.cadastralvocabulary.org/) - especially this [Graphical Overview](http://www.cadastralvocabulary.org/GeneralOverview/GraphicalOverview.php)
 
 - [AxonFramework](http://www.axonframework.org) (including AxonServer)
   - [github.com/AxonFramework](https://github.com/AxonFramework/AxonFramework)
